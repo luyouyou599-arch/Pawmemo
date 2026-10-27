@@ -1,0 +1,34 @@
+node_modules/
+.pawmemo/
+.env
+.env.*
+!.env.example
+api_key/
+.dev-*-dist/
+dist/
+.DS_Store
+test-results/
+playwright-report/
+ios/**/xcuserdata/
+ios/.build/
+
+# Local credentials and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.mobileprovision
+.netrc
+.npmrc
+
+# Local runtime identities, historical conversations and verification artifacts
+docs/archive/
+docs/maintenance/
+docs/runtime/
+docs/ios-shell01/
+docs/audit-evidence/*
+!docs/audit-evidence/.gitkeep
+*.log
+*.xcresult/
+ios/DerivedData/
