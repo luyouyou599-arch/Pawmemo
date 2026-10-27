@@ -1,0 +1,107 @@
+{
+  "workOrder": "PM-MEMORY-GRANULARITY-01",
+  "syntheticOnly": true,
+  "sampleChange": "PM authorized replace prior mixed-event retest with user rabbit-food screenshot text; correction-other-pet retained. Rabbit has no prior live before baseline.",
+  "persistentOriginalBudgetProxy": true,
+  "model": "qwen-plus",
+  "callLimit": 2,
+  "taskCeilingCny": 0.02,
+  "actualCalls": 2,
+  "reservationUpperCny": 0.0154328,
+  "beforePromptSHA256": "a48ebdf1b3e7c33fb51080ff63ab529fd2866de34f70a2672efe9e99531b5d44",
+  "afterPromptSHA256": "c6efc31c4c4bcfabf408d375db17e02571bb78908784408edda2ffb0b8c34bd5",
+  "observed": [
+    {
+      "phase": "after",
+      "status": 200,
+      "ms": 2494.7534170000004,
+      "model": "qwen-plus",
+      "usage": {
+        "input": 744,
+        "output": 93
+      }
+    },
+    {
+      "phase": "after",
+      "status": 200,
+      "ms": 2263.014875,
+      "model": "qwen-plus",
+      "usage": {
+        "input": 729,
+        "output": 87
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "correction_other_pet",
+      "phase": "after",
+      "input": "纠正一下：团子没有躲床底，是躲到沙发后；五分钟后出来了。豆豆吃了鸡肉，那是另一只狗。",
+      "criteria": "团子纠正事件一条，否定和位置/五分钟恢复不丢失；不把豆豆的饮食记给团子，不推断原因。",
+      "expectedFacts": 1,
+      "expectedIntent": "record",
+      "status": 200,
+      "elapsedMs": 2509.951709,
+      "factCount": 1,
+      "response": {
+        "petId": "pet_synthetic",
+        "messageId": "message_grain_correction_other_pet_after",
+        "requestId": "request_grain_correction_other_pet_after",
+        "result": {
+          "intent": "record",
+          "facts": [
+            {
+              "content": "团子躲到沙发后，五分钟后出来了。",
+              "tags": [
+                "行为",
+                "躲藏",
+                "位置",
+                "时间"
+              ],
+              "quote": "团子没有躲床底，是躲到沙发后；五分钟后出来了。",
+              "eventAt": null
+            }
+          ],
+          "question": "",
+          "clarification": ""
+        }
+      }
+    },
+    {
+      "id": "rabbit_food_preference",
+      "phase": "after",
+      "input": "咪咪今天吃了一个兔肉粮，它非常喜欢吃。",
+      "criteria": [
+        "同一食物的尝试与偏好合一条",
+        "品牌未知只标识缺资料，不猜品牌",
+        "不额外复制进食事件，原文保留"
+      ],
+      "expectedFacts": 1,
+      "expectedIntent": "record",
+      "status": 200,
+      "elapsedMs": 2269.6384999999996,
+      "factCount": 1,
+      "response": {
+        "petId": "pet_synthetic",
+        "messageId": "message_grain_rabbit_food_preference_after",
+        "requestId": "request_grain_rabbit_food_preference_after",
+        "result": {
+          "intent": "record",
+          "facts": [
+            {
+              "content": "咪咪非常喜欢吃兔肉粮（品牌未知）",
+              "tags": [
+                "饮食偏好",
+                "兔肉粮"
+              ],
+              "quote": "咪咪今天吃了一个兔肉粮，它非常喜欢吃。",
+              "eventAt": null
+            }
+          ],
+          "question": "",
+          "clarification": ""
+        }
+      }
+    }
+  ]
+}

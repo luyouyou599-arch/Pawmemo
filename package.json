@@ -1,0 +1,36 @@
+{
+  "name": "pawmemo-demo",
+  "version": "1.0.0",
+  "description": "Pawmemo V3: pet conversations and personal memories",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "preview": "PAWMEMO_DIST=.pawmemo/build PORT=5181 node --env-file-if-exists=.env server/app.mjs",
+    "serve:v3": "npm run preview",
+    "test:browser": "node scripts/test-browser.mjs",
+    "test:server": "node tests/server.mjs",
+    "test:budget": "node tests/budget.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "private": true
+}

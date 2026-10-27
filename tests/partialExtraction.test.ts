@@ -1,0 +1,10 @@
+import {describe,it,expect} from 'vitest';
+import {applyExtraction,empty,validData,validExtraction,type Message,type Extraction} from '../src/v3Model';
+const text='咪咪今天在窗台晒太阳。它吃了兔肉粮，很喜欢。后来它和奶酪那样了，我没看清。';
+const result:Extraction={intent:'record',facts:[{content:'咪咪今天在窗台晒太阳。',quote:'咪咪今天在窗台晒太阳。',tags:['日常','日光浴'],eventAt:null},{content:'咪咪喜欢兔肉粮（品牌未知）。',quote:'它吃了兔肉粮，很喜欢。',tags:['食物偏好'],eventAt:null}],question:'',clarification:'后来咪咪和奶酪发生了什么？'};
+function fixture(){const d=empty(),now=new Date().toISOString();d.pets=[{id:'pet_a',name:'咪咪',kind:'猫',breed:'',birthday:'',avatar:null,archived:false,createdAt:now,updatedAt:now}];d.activePetId='pet_a';d.conversations.pet_a='conversation_a';const m:Message={id:'message_a',petId:'pet_a',requestId:'request_a',conversationId:'conversation_a',text,source:'text',createdAt:now,extraction:'pending',answerState:'pending',result:null,memoryIds:[],answer:null,error:''};d.messages.push(m);return d}
+describe('partial extraction and clarification',()=>{
+ it('saves known facts and tags while preserving a separate unresolved question',()=>{const d=applyExtraction(fixture(),'message_a',result);expect(validData(d)).toBe(true);expect(d.memories).toHaveLength(2);expect(d.memories.map(m=>m.versions[0].tags)).toEqual([['日常','日光浴'],['食物偏好']]);expect(d.memories.every(m=>!m.quote.includes('没看清'))).toBe(true);expect(d.messages[0].result?.clarification).toBe(result.clarification);expect(d.messages[0].answerState).toBe('done');expect(applyExtraction(d,'message_a',result).memories).toHaveLength(2)});
+ it('also allows clear questions with facts and pending clarification',()=>{expect(validExtraction({...result,intent:'mixed',question:'下次吃什么？'},text)).toBe(true)});
+ it('uncertain-only input still creates no facts and cannot contain a fabricated quote',()=>{const d=applyExtraction(fixture(),'message_a',{intent:'clarify',facts:[],question:'',clarification:result.clarification});expect(d.memories).toHaveLength(0);expect(validExtraction({...result,facts:[{...result.facts[0],quote:'咪咪咬了奶酪'}]},text)).toBe(false)});
+});
